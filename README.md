@@ -1,6 +1,10 @@
 # argocd-homelab
 ArgoCD managed homelab
 
+
+Specs:
+Ubuntu 22.04 
+
 # Setup
 # Essential packages (ZFS/NFS/iSCSI)
 sudo apt update && sudo apt install -y \
@@ -8,6 +12,11 @@ sudo apt update && sudo apt install -y \
   nfs-kernel-server \
   cifs-utils \
   open-iscsi  # Optional but recommended
+
+# argocd cli
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
 
 # Terraform install
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common wget && wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list && sudo apt-get update && sudo apt-get install -y terraform
