@@ -22,5 +22,3 @@ spec:
           image: aschonn04/nginx:v0.1.0
           ports:
             - containerPort: 80
-      imagePullSecrets:
-        - name: dockerconfigjson
