@@ -9,6 +9,6 @@ terraform {
 
 provider "helm" {
   kubernetes = {
-    config_path = "~/.kube/putra.yaml"
+    config_path = "~/.kube/config"
   }
 }

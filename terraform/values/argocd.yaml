@@ -1,0 +1,52 @@
+# Argo CD single-node Helm values
+
+server:
+  # Disable extra args for single-node dev/test
+  extraArgs: 
+    - --insecure
+  # Reduce resources for single-node
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+
+repoServer:
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  replicas: 1
+
+applicationController:
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  replicas: 1
+
+dex:
+  enabled: false
+
+configs:
+  cm:
+    application.instanceLabelKey: argocd.argoproj.io/instance
+    # Allow insecure for local single-node testing
+    admin.enabled: true
+
+controller:
+  # Disable HA features for single-node
+  ha: false
