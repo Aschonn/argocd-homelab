@@ -9,6 +9,10 @@ sudo apt update && sudo apt install -y \
   cifs-utils \
   open-iscsi  # Optional but recommended
 
+# Customize these values!
+export SETUP_NODEIP=192.168.0.82  # Your node IP
+export SETUP_CLUSTERTOKEN=randomtokensecret12343  # Strong token
+
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.33.3+k3s1" \
   INSTALL_K3S_EXEC="--node-ip $SETUP_NODEIP \
   --disable=flannel,local-storage,metrics-server,servicelb,traefik \
@@ -21,19 +25,13 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.33.3+k3s1" \
 
 # Configure kubectl access
 mkdir -p $HOME/.kube && sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config && chmod 600 $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config && chmod 600 $HOME/.kube/config-
 
 
+# Install Helm
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 
 # helm chart for certmgr
 # helm chart for argocd
 
-CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
-CLI_ARCH=amd64 && [ "$(uname -m)" = "aarch64" ] && CLI_ARCH=arm64
-curl -L --fail --remote-name-all \
-  https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
-sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
-sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
-rm cilium-linux-${CLI_ARCH}.tar.gz*
