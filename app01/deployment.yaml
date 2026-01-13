@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  namespace: nginx-ingress
+  namespace: foo
   labels:
     app: nginx
 spec:
@@ -18,7 +18,6 @@ spec:
     spec:
       containers:
         - name: nginx
-          imagePullPolicy: Always
           image: aschonn04/nginx:v0.1.0
           ports:
             - containerPort: 80
