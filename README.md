@@ -9,6 +9,9 @@ sudo apt update && sudo apt install -y \
   cifs-utils \
   open-iscsi  # Optional but recommended
 
+# Terraform install
+sudo apt-get update && sudo apt-get install -y gnupg software-properties-common wget && wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list && sudo apt-get update && sudo apt-get install -y terraform
+
 # Customize these values!
 export SETUP_NODEIP=192.168.0.82  # Your node IP
 export SETUP_CLUSTERTOKEN=randomtokensecret12343  # Strong token
