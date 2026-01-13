@@ -5,6 +5,11 @@ ArgoCD managed homelab
 Specs:
 Ubuntu 22.04 
 
+# Tools:
+### k9s:
+`curl -sS https://webinstall.dev/k9s | bash`
+
+
 # Setup
 # Essential packages (ZFS/NFS/iSCSI)
 sudo apt update && sudo apt install -y \
