@@ -50,6 +50,12 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config && chmod 600 $HOME/.kube/config-
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 
-# helm chart for certmgr
-# helm chart for argocd
+# Terraform plan and apply
+cd terraform
+terraform plan
+terraform apply
 
+# kubectl get po -A
+
+### if everything is running smootly then run to see application on vm (internal vm):
+kubectl port-forward svc/argocd-server -n argocd 8080:443 --address 0.0.0.0.0
