@@ -18,11 +18,11 @@ spec:
       name: '{{path.basename}}'
       labels:
         type: infrastructure
-      annotations:
-        argocd.argoproj.io/kustomize-build-options: "--enable-helm"
     spec:
       project: default
       source:
+        plugin:
+          name: kustomize-build-with-helm
         repoURL: https://github.com/Aschonn/argocd-homelab.git
         targetRevision: HEAD
         path: '{{path}}'

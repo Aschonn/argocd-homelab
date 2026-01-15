@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: nginx
+
+helmCharts:
+  - name: ingress-nginx
+    repo: https://kubernetes.github.io/ingress-nginx
+    version: 5.8.0       # example stable version
+    releaseName: nginx
+    includeCRDs: true
+    valuesInline:
+      controller:
+        replicaCount: 1
+        service:
+          type: ClusterIP
+        ingressClassResource:
+          default: true
+      defaultBackend:
+        enabled: false
