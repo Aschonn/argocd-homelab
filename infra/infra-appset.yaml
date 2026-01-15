@@ -11,8 +11,8 @@ spec:
       repoURL: https://github.com/Aschonn/argocd-homelab.git
       revision: HEAD
       directories:
-        - path: infra/metrics-server/kustomize
-        - path: infra/cert-manager/kustomize
+        - path: infra/metrics-server
+        - path: infra/cert-manager
   template:
     metadata:
       name: '{{path.basename}}'
