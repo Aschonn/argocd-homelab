@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://helm.cilium.io
+    repoURL: https://github.com/Aschonn/argocd-homelab.git
     chart: cilium
     targetRevision: 1.15.3
     helm:
