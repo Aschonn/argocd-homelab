@@ -13,13 +13,14 @@ spec:
         directories:
           - path: infra/monitoring/*
           - path: infra/controllers/*
+          - path: infra/networking/*
   template:
     metadata:
       name: '{{path.basename}}'
       labels:
         type: infrastructure
     spec:
-      project: default
+      project: infrastructure
       source:
         plugin:
           name: kustomize-build-with-helm
