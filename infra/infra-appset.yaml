@@ -12,6 +12,7 @@ spec:
       revision: HEAD
       directories:
         - path: infra/metrics-server/kustomize
+        - path: infra/cert-manager/kustomize
   template:
     metadata:
       name: metrics-server
