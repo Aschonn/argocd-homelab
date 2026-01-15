@@ -15,7 +15,7 @@ spec:
         - path: infra/cert-manager/kustomize
   template:
     metadata:
-      name: metrics-server
+      name: '{{path.basename}}'
       labels:
         type: infrastructure
     spec:
@@ -28,7 +28,7 @@ spec:
         path: '{{path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: kube-system
+        namespace: '{{path.basename}}'
       syncPolicy:
         automated:
           prune: true
