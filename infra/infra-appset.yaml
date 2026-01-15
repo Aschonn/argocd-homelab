@@ -7,17 +7,19 @@ metadata:
     argocd.argoproj.io/sync-wave: "-2"
 spec:
   generators:
-  - git:
-      repoURL: https://github.com/Aschonn/argocd-homelab.git
-      revision: HEAD
-      directories:
-        - path: infra/monitoring/*
-        - path: infra/controllers/*
+    - git:
+        repoURL: https://github.com/Aschonn/argocd-homelab.git
+        revision: HEAD
+        directories:
+          - path: infra/monitoring/*
+          - path: infra/controllers/*
   template:
     metadata:
       name: '{{path.basename}}'
       labels:
         type: infrastructure
+      annotations:
+        argocd.argoproj.io/kustomize-build-options: "--enable-helm"
     spec:
       project: default
       source:
