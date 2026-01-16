@@ -1,0 +1,30 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: gateway-external
+  namespace: gateway
+spec:
+  addresses:
+  - type: IPAddress
+    value: 192.168.0.84
+  gatewayClassName: cilium
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: "*.drogon.tech"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "*.drogon.tech"
+      tls:
+        certificateRefs:
+          - name: cert-drogontech
+            kind: Secret
+            group: "" # required
+      allowedRoutes:
+        namespaces:
+          from: All
