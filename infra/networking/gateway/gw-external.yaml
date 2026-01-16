@@ -4,27 +4,26 @@ metadata:
   name: gateway-external
   namespace: gateway
 spec:
-  addresses:
-  - type: IPAddress
-    value: 192.168.0.84
   gatewayClassName: cilium
+  addresses:
+    - type: IPAddress
+      value: 192.168.0.83
   listeners:
     - name: http
       protocol: HTTP
       port: 80
-      hostname: "*.drogon.tech"
       allowedRoutes:
         namespaces:
           from: All
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: "*.drogon.tech"
-      tls:
-        certificateRefs:
-          - name: cert-drogontech
-            kind: Secret
-            group: "" # required
       allowedRoutes:
         namespaces:
           from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: cert-drogontech
+            group: ""
+        mode: Terminate
