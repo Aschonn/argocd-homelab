@@ -4,8 +4,8 @@ metadata:
   name: cert-drogontech
   namespace: gateway
   annotations:
-    argocd.argoproj.io/sync-wave: "2" # Deploy after ClusterIssuer (wave 1)
-    argocd.argoproj.io/sync-options: Validate=true
+    argocd.argoproj.io/sync-wave: "1" # Deploy after ClusterIssuer (wave 1)
+    argocd.argoproj.io/sync-options: Validate=false
     argocd.argoproj.io/compare-options: ServerSideDiff=true
 spec:
   dnsNames:
