@@ -4,10 +4,10 @@ kind: Kustomization
 resources:
 
   # Gateway resources
-  - gw-class.yaml
+  - gateway-class.yaml
   - ns.yaml
-  - gw-external.yaml
-  - gw-internal.yaml
+  - gateway-external.yaml
+  - gateway-internal.yaml
   - cert-drogontech.yaml
 
 
