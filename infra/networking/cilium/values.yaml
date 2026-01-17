@@ -1,84 +1,101 @@
-cluster:
-  name: argocd-cluster
-  id: 1
+# -------------------------------------------------
+# Cilium – Single Node / Homelab / ArgoCD Friendly
+# -------------------------------------------------
+
 kubeProxyReplacement: true
-k8sServiceHost: 192.168.0.83
+
+# Required for kube-proxy replacement
+k8sServiceHost: ""
 k8sServicePort: 6443
-securityContext:
-  capabilities:
-    ciliumAgent: [ CHOWN, KILL, NET_ADMIN, NET_RAW, IPC_LOCK, SYS_ADMIN, SYS_RESOURCE, DAC_OVERRIDE, FOWNER, SETGID, SETUID ]
-    cleanCiliumState: [ NET_ADMIN, SYS_ADMIN, SYS_RESOURCE ]
-cgroup:
-  autoMount:
-    enabled: false
-  hostRoot: /sys/fs/cgroup
-# https://docs.cilium.io/en/stable/network/concepts/ipam/
+
+# -------------------------------------------------
+# Networking
+# -------------------------------------------------
+routingMode: native
+autoDirectNodeRoutes: true
+
+ipv4:
+  enabled: true
+ipv6:
+  enabled: false
+
+# Enable NAT so pods can reach the internet
+enableIPv4Masquerade: true
+enableIPv6Masquerade: false
+
+# IPAM
 ipam:
-  mode: kubernetes
-operator:
-  rollOutPods: true
-  replicas: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 256Mi
-    requests:
-      cpu: 50m
-      memory: 128Mi
-# Roll out cilium agent pods automatically when ConfigMap is updated.
-rollOutCiliumPods: true
-resources:
-  limits:
-    cpu: 1000m
-    memory: 1Gi
-  requests:
-    cpu: 200m
-    memory: 512Mi
-debug:
+  mode: cluster-pool
+  operator:
+    clusterPoolIPv4PodCIDRList:
+      - 10.42.0.0/16
+
+# -------------------------------------------------
+# DNS – THIS FIXES YOUR ISSUE
+# -------------------------------------------------
+dnsProxy:
   enabled: true
-# Increase rate limit when doing L2 announcements
-k8sClientRateLimit:
-  qps: 100
-  burst: 200
-l2announcements:
-  enabled: true
-externalIPs:
-  enabled: true
-loadBalancer:
-  # https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/#maglev-consistent-hashing
-  algorithm: maglev
-gatewayAPI:
-  enabled: true
-  # Enable Application-Layer Protocol Negotiation (ALPN) which will attempt HTTP/2, then HTTP 1.1.
-  # Services that wish to use HTTP/2 must indicate that via their appProtocol (GEP-1911).
-  enableAlpn: false
-envoy:
-  securityContext:
-    capabilities:
-      keepCapNetBindService: true
-      envoy: [ NET_ADMIN, PERFMON, BPF ]
+
+# -------------------------------------------------
+# CNI
+# -------------------------------------------------
+cni:
+  exclusive: true
+
+# -------------------------------------------------
+# Hubble (Optional but useful)
+# -------------------------------------------------
 hubble:
   enabled: true
   relay:
     enabled: true
-    rollOutPods: true
   ui:
     enabled: true
-    rollOutPods: true
-ingressController:
+
+# -------------------------------------------------
+# Operator
+# -------------------------------------------------
+operator:
+  replicas: 1
+
+# -------------------------------------------------
+# Resources (safe defaults for 1 node)
+# -------------------------------------------------
+resources:
+  limits:
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+operator:
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+# -------------------------------------------------
+# Security / Compatibility
+# -------------------------------------------------
+enableRuntimeDeviceDetection: true
+enableBPFMasquerade: true
+
+# -------------------------------------------------
+# Observability
+# -------------------------------------------------
+prometheus:
   enabled: false
-  default: true
-  loadbalancerMode: shared
-  service:
-    annotations:
-      io.cilium/lb-ipam-ips: 192.168.0.224
-# mTLS
-authentication:
+
+# -------------------------------------------------
+# NodePort (optional)
+# -------------------------------------------------
+nodePort:
+  enabled: true
+
+# -------------------------------------------------
+# Debug (disable unless needed)
+# -------------------------------------------------
+debug:
   enabled: false
-  mutual:
-    spire:
-      enabled: false
-      install:
-        server:
-          dataStorage:
-            storageClass: cilium-spire-sc
