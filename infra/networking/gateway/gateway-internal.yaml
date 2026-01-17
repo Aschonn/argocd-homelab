@@ -3,8 +3,6 @@ kind: Gateway
 metadata:
   name: gateway-internal
   namespace: gateway
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   addresses:
   - type: IPAddress

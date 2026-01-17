@@ -14,6 +14,7 @@ configs:
 
 crds:
   install: true
+  # -- Keep CRDs on chart uninstall
   keep: false
 
 controller:
@@ -44,7 +45,6 @@ redis:
       memory: 128Mi
 
 server:
-  insecure: true
   resources:
     requests:
       cpu: 50m
@@ -52,15 +52,6 @@ server:
     limits:
       cpu: 4000m
       memory: 256Mi
-  service:
-    type: ClusterIP
-    ports:
-      - name: http
-        port: 80
-        targetPort: 8080
-      - name: https
-        port: 443
-        targetPort: 8080
 
 repoServer:
   containerSecurityContext:

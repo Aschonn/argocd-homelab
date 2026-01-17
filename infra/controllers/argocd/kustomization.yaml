@@ -4,7 +4,8 @@ kind: Kustomization
 namespace: argocd   # ensures resources deploy here
 resources:
   - ns.yaml
-  - ingress.yaml
+  # - ingress.yaml
+  - http-route.yaml
   - projects.yaml
 helmCharts:
   - name: argo-cd

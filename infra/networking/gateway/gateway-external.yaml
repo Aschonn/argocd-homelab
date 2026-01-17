@@ -7,23 +7,24 @@ spec:
   gatewayClassName: cilium
   addresses:
     - type: IPAddress
-      value: 192.168.0.83
+      value: 192.168.0.83  # your actual node IP
   listeners:
     - name: http
       protocol: HTTP
       port: 80
+      hostname: '*.drogon.tech'
       allowedRoutes:
         namespaces:
           from: All
     - name: https
       protocol: HTTPS
       port: 443
-      allowedRoutes:
-        namespaces:
-          from: All
+      hostname: '*.drogon.tech'
       tls:
+        mode: Terminate
         certificateRefs:
           - kind: Secret
             name: cert-drogontech
-            group: ""
-        mode: Terminate
+      allowedRoutes:
+        namespaces:
+          from: All

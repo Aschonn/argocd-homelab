@@ -10,7 +10,7 @@ metadata:
 spec:
   dnsNames:
     - "*.drogon.tech"
-    - "argocd.drogon.tech"
+    - drogon.tech
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
