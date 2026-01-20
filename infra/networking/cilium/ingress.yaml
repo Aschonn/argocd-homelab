@@ -1,26 +1,26 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: argocd
-  namespace: argocd
+  name: hubble-ui
+  namespace: kube-system
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    cert-manager.io/cluster-issuer: "cloudflare-cluster-issuer"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
-  tls:
-  - hosts:
-    - argocd.drogon.tech
-    secretName: argocd-tls
   rules:
-  - host: argocd.drogon.tech
+  - host: hubble.drogon.tech
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: argocd-server
+            name: hubble-ui
             port:
               number: 80
+  tls:
+  - hosts:
+      - hubble.drogon.tech
+    secretName: hubble-tls
