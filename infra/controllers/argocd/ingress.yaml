@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd
+  namespace: argocd
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "selfsigned-cluster-issuer"  # <--- must match existing ClusterIssuer
+spec:
+  rules:
+    - host: argocd.drogontech.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+  tls:
+  - hosts:
+    - argocd.drogontech.local
+    secretName: argocd-tls
+
