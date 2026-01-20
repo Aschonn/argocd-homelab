@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ns.yaml
   # - cloudflare-secret.yaml
-  - create-issuer-self.yaml
+  - internal-cluster-issuer.yaml
   - internal-ca-secret.yaml
   - cluster-issuer.yaml
 helmCharts:
