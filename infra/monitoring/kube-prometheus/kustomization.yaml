@@ -7,6 +7,7 @@ resources:
 - ns.yaml
 - ingress-grafana.yaml
 - ingress-prometheus.yaml
+- ingress-alertmanager.yaml
 
 helmCharts:
 - name: kube-prometheus-stack
