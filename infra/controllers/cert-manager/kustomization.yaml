@@ -4,7 +4,6 @@ resources:
   - ns.yaml
   # - cloudflare-secret.yaml
   - cluster-issuer.yaml
-  - validate-setup.yaml
 helmCharts:
   - name: cert-manager
     repo: https://charts.jetstack.io
