@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: kube-prometheus-stack
 
 resources:
-- namespace.yaml
+- ns.yaml
 - ingress-grafana.yaml
 - ingress-prometheus.yaml
 
