@@ -14,6 +14,7 @@ spec:
           - path: infra/monitoring/*
           - path: infra/controllers/*
           - path: infra/networking/*
+          - path: infra/storage/*
   template:
     metadata:
       name: '{{path.basename}}'
