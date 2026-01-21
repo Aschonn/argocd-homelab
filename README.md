@@ -1,16 +1,29 @@
-# argocd-homelab
-ArgoCD managed homelab
+# ArgoCD Homelab
 
+ArgoCD-managed homelab.
 
-Specs:
-Ubuntu 22.04 
+**Specs:** Ubuntu 24.04
 
-# Tutorial
+---
 
-# Customize these values!
-export SETUP_NODEIP=192.168.0.82  # Your node IP
+## ⚙️ Tutorial
+
+### 1️⃣ Customize Values
+
+Before installing K3s, set your node IP and cluster token:
+
+```bash
+export SETUP_NODEIP=192.168.0.82          # Your node IP
 export SETUP_CLUSTERTOKEN=randomtokensecret12343  # Strong token
+```
 
+---
+
+### 2️⃣ Install K3s
+
+Run the following command to install K3s with custom options:
+
+```bash
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.33.3+k3s1" \
   INSTALL_K3S_EXEC="--node-ip $SETUP_NODEIP \
   --disable=flannel,local-storage,metrics-server,servicelb,traefik \
@@ -20,42 +33,80 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.33.3+k3s1" \
   --disable-kube-proxy" \
   K3S_TOKEN=$SETUP_CLUSTERTOKEN \
   K3S_KUBECONFIG_MODE=644 sh -s -
+```
 
-# Install Helm
+---
+
+### 3️⃣ Install Helm
+
+```bash
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+```
 
+---
 
-# Configure kubectl access
-mkdir -p $HOME/.kube && sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config && chmod 600 $HOME/.kube/config-
+### 4️⃣ Configure kubectl Access
 
+```bash
+mkdir -p $HOME/.kube
+sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+chmod 600 $HOME/.kube/config
+```
 
-# Helpful Tools:
-### k9s:
-`curl -sS https://webinstall.dev/k9s | bash`
-`source ~/.config/envman/PATH.env`
+---
 
+### 5️⃣ Helpful Tools
 
-# Setup
-# Essential packages (ZFS/NFS/iSCSI)
+#### k9s (Kubernetes CLI UI)
+
+```bash
+curl -sS https://webinstall.dev/k9s | bash
+source ~/.config/envman/PATH.env
+```
+
+---
+
+### 6️⃣ Essential Packages
+
+Install ZFS, NFS, iSCSI, and CIFS support:
+
+```bash
 sudo apt update && sudo apt install -y \
   zfsutils-linux \
   nfs-kernel-server \
   cifs-utils \
   open-iscsi  # Optional but recommended
+```
 
-# argocd cli
-`curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+---
+
+### 7️⃣ ArgoCD CLI
+
+Install ArgoCD CLI:
+
+```bash
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
 sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-rm argocd-linux-amd64`
+rm argocd-linux-amd64
+```
 
+---
 
+## 🐞 Debug / Local Access
 
+If you want to **debug the application without creating an ingress**, you can forward the ArgoCD server port to your node:
 
-
-
-
-# Debug
-
-### Use if you want to debug application without creating ingress. This create open port on node ips so you can view from network
+```bash
 kubectl port-forward svc/argocd-server -n argocd 8080:443 --address 0.0.0.0
+```
+
+- Access via: `https://<node-ip>:8080` from your local network.
+
+---
+
+## ✅ Notes
+
+- Ensure `SETUP_NODEIP` matches your node IP.  
+- Use a strong `SETUP_CLUSTERTOKEN`.  
+- Optional packages are recomm
