@@ -24,7 +24,7 @@ prometheusOperator:
 grafana:
   enabled: true
   adminPassword: "admin"
-  defaultDashboardsEnabled: true
+  defaultDashboardsEnabled: false
   nodeSelector:
     kubernetes.io/arch: amd64
 
