@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - argocd.drogon.tech
+    - argocd.DOMAINNAME
     secretName: argocd-tls
   rules:
-  - host: argocd.drogon.tech
+  - host: argocd.DOMAINNAME
     http:
       paths:
       - path: /

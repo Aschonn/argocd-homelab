@@ -1,26 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: infrastructure-components
-  namespace: argocd  # must stay here for Argo CD
+  name: monitoring-components
+  namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   generators:
-    - git:
-        repoURL: GITREPO
-        revision: HEAD
-        directories:
-          - path: infra/controllers/*
-          - path: infra/networking/*
-          - path: infra/storage/*
+  - git:
+      repoURL: GITREPO
+      revision: HEAD
+      directories:
+      - path: monitoring/kube-prometheus-stack
   template:
     metadata:
       name: '{{path.basename}}'
       labels:
-        type: infrastructure
+        type: monitoring
     spec:
-      project: infrastructure
+      project: default
       source:
         plugin:
           name: kustomize-build-with-helm
@@ -34,6 +32,12 @@ spec:
         automated:
           prune: true
           selfHeal: true
+        retry:
+          limit: 10
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 5m
         syncOptions:
         - CreateNamespace=true
         - ServerSideApply=true

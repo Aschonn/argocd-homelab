@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - longhorn.drogon.tech
+    - longhorn.__DOMAINURL__
     secretName: longhorn-tls
   rules:
-  - host: longhorn.drogon.tech
+  - host: longhorn.DOMAINNAME
     http:
       paths:
       - path: /

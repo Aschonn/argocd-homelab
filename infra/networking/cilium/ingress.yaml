@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
   rules:
-  - host: hubble.drogon.tech
+  - host: hubble.DOMAINNAME
     http:
       paths:
       - path: /
@@ -22,5 +22,5 @@ spec:
               number: 80
   tls:
   - hosts:
-      - hubble.drogon.tech
+      - hubble.DOMAINNAME
     secretName: hubble-tls
