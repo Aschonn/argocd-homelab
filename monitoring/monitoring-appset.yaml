@@ -8,7 +8,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: GITREPO
+      repoURL: https://github.com/Aschonn/argocd-homelab.git
       revision: HEAD
       directories:
       - path: monitoring/kube-prometheus-stack
@@ -22,7 +22,7 @@ spec:
       source:
         plugin:
           name: kustomize-build-with-helm
-        repoURL: GITREPO
+        repoURL: https://github.com/Aschonn/argocd-homelab.git
         targetRevision: HEAD
         path: '{{path}}'
       destination:

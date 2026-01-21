@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - prometheus.DOMAINNAME
+    - prometheus.drogon.tech
     secretName: prometheus-tls
   rules:
-  - host: prometheus.DOMAINNAME
+  - host: prometheus.drogon.tech
     http:
       paths:
       - path: /

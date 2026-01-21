@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - alertmanager.DOMAINNAME
+    - alertmanager.drogon.tech
     secretName: alertmanager-tls
   rules:
-  - host: alertmanager.DOMAINNAME
+  - host: alertmanager.drogon.tech
     http:
       paths:
       - path: /

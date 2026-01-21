@@ -1,26 +1,28 @@
+# my-apps/myapplications-appset.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: infrastructure-components
-  namespace: argocd  # must stay here for Argo CD
+  name: applications
+  namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   generators:
-    - git:
-        repoURL: https://github.com/Aschonn/argocd-homelab.git
-        revision: HEAD
-        directories:
-          - path: infra/controllers/*
-          - path: infra/networking/*
-          - path: infra/storage/*
+  - git:
+      repoURL: https://github.com/Aschonn/argocd-homelab.git
+      revision: HEAD
+      directories:
+      - path: apps/*
+      - exclude: true
+        path: apps/apps-appset.yaml
   template:
     metadata:
+      # Changed from 'app-{{path.basename}}' to just '{{path.basename}}'
       name: '{{path.basename}}'
       labels:
-        type: infrastructure
+        type: application
     spec:
-      project: infrastructure
+      project: applications
       source:
         plugin:
           name: kustomize-build-with-helm
@@ -34,6 +36,12 @@ spec:
         automated:
           prune: true
           selfHeal: true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
         syncOptions:
         - CreateNamespace=true
         - ServerSideApply=true

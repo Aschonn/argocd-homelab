@@ -15,7 +15,7 @@ spec:
     - longhorn.__DOMAINURL__
     secretName: longhorn-tls
   rules:
-  - host: longhorn.DOMAINNAME
+  - host: longhorn.drogon.tech
     http:
       paths:
       - path: /

@@ -6,13 +6,13 @@ spec:
   acme:
     # Use Let's Encrypt production server
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@DOMAINNAME     # your email for LE registration
+    email: admin@drogon.tech     # your email for LE registration
     privateKeySecretRef:
       name: cloudflare-issuer-key      # will store your ACME private key
     solvers:
       - dns01:
           cloudflare:
-            email: admin@DOMAINNAME
+            email: admin@drogon.tech
             apiTokenSecretRef:
               name: cloudflare-api-token
               key: api-token
