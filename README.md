@@ -1,6 +1,7 @@
 # ArgoCD Homelab
 
-ArgoCD-managed homelab.
+For this setup I am using a proxmox vm as my node. I used terraform from my homelab to setup up the node. For this example I will be creating a barebones k3s cluster with all the basic necessarities to have a functioning gitops repo and cluster. This includes https certificates generated via dns from cloudflare. By the end of this tutorial you should have a functioning cluster with visability to boot. 
+
 
 **Specs:** Ubuntu 24.04
 
@@ -14,7 +15,7 @@ Before installing K3s, set your node IP and cluster token:
 
 ```bash
 export SETUP_NODEIP=192.168.0.82          # Your node IP
-export SETUP_CLUSTERTOKEN=randomtokensecret12343  # Strong token
+export SETUP_CLUSTERTOKEN=superduperrandomsecret  # Strong token
 ```
 
 ---
