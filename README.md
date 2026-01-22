@@ -1,6 +1,10 @@
 # ArgoCD Homelab
 
-For this setup I am using a proxmox vm as my node. I used terraform from my homelab to setup up the node. For this example I will be creating a barebones k3s cluster with all the basic necessarities to have a functioning gitops repo and cluster. This includes https certificates generated via dns from cloudflare. By the end of this tutorial you should have a functioning cluster with visability to boot. 
+For this setup I used terraform from my homelab to setup up the node. I will be creating a barebones k3s cluster with all the basic necessarities (infrastructure, monitoring, storage, etc..) to have a functioning gitops repo and cluster. This includes https certificates generated via dns from cloudflare. By the end of this tutorial you should have a functioning cluster with visability to boot local via your network.
+
+Ps. I used local DNS in order for this to work. I used Technitium DNS which is an open source dhcp server that can be installed using if interested:
+
+### https://community-scripts.github.io/ProxmoxVE/scripts?id=technitiumdns
 
 
 **Specs:** Ubuntu 24.04
